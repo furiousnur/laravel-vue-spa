@@ -12,7 +12,7 @@
                             <router-link class="nav-link active" aria-current="page" :to="{name:'home'}">Home</router-link>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
+                            <router-link class="nav-link" :to="{name:'category-list'}">Product Category</router-link>
                         </li>
                     </ul>
                 </div>

@@ -3,7 +3,8 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
-import Home from '../pages/Home'
+import Home from '../pages/home'
+import CategoryList from '../pages/category/index'
 
 const routes = new VueRouter({
     mode: 'history',
@@ -12,6 +13,10 @@ const routes = new VueRouter({
             path: '/',
             component: Home,
             name: 'home',
+        }, {
+            path: '/category',
+            component: CategoryList,
+            name: 'category-list',
         }
     ]
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
@@ -41,7 +42,7 @@ class CategoryController extends Controller
            'name' => 'required'
         ]);
 
-        $category = Category::create([
+        Category::create([
            'name' => $request->name,
            'slug' => Str::slug($request->name)
         ]);
@@ -66,9 +67,14 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($slug)
     {
-        //
+        $category = Category::where('slug',$slug)->first();
+        if ($category){
+            return response()->json($category,200);
+        }else{
+            return response()->json('failed',404);
+        }
     }
 
     /**
@@ -78,9 +84,17 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $slug)
     {
-        //
+        $category = Category::where('slug',$slug)->first();
+        $this->validate($request,[
+            'name' => 'required|unique:categories,name,'.$category->id
+        ]);
+
+        $category->name = $request->name;
+        $category->slug = Str::slug($request->name);
+        $category->update();
+        return response()->json('success', 200);
     }
 
     /**
@@ -89,8 +103,14 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($slug)
     {
-        //
+        $category = Category::where('slug',$slug)->first();
+        if ($category){
+            $category->delete();
+            return response()->json('success',200);
+        }else{
+            return response()->json('failed',404);
+        }
     }
 }

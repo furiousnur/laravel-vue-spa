@@ -2000,22 +2000,30 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    createCategory: function createCategory() {
+    updateCategory: function updateCategory() {
       var _this = this;
 
-      /*axios.post('/api/category', {name: this.name}).then(response => {
-          console.log(response);
-      })*/
-      this.categoryForm.post('/api/category').then(function (_ref) {
-        var data = _ref.data;
-        _this.categoryForm.name = '';
-
+      var slug = this.$route.params.slug;
+      this.categoryForm.put("/api/category/".concat(slug)).then(function () {
         _this.$toast.success({
           title: 'Success',
-          message: 'Category created successfully.'
+          message: 'Category updated successfully.'
         });
       });
+    },
+    loadCategory: function loadCategory() {
+      var _this2 = this;
+
+      var slug = this.$route.params.slug;
+      axios.get("/api/category/".concat(slug, "/edit"), {
+        name: this.name
+      }).then(function (response) {
+        _this2.categoryForm.name = response.data.name;
+      });
     }
+  },
+  mounted: function mounted() {
+    this.loadCategory();
   }
 });
 
@@ -2071,6 +2079,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2084,9 +2097,22 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/api/category').then(function (response) {
         _this.categories = response.data;
       });
+    },
+    deleteCategory: function deleteCategory(category) {
+      var _this2 = this;
+
+      axios["delete"]("/api/category/".concat(category.slug)).then(function () {
+        _this2.$toast.success({
+          title: 'Success',
+          message: 'Category deleted successfully.'
+        });
+      });
+      var index = this.categories.indexOf(category);
+      this.categories.splice(index, 1);
     }
   },
   mounted: function mounted() {
+    this.loadCategories();
     this.loadCategories();
   }
 });
@@ -38689,7 +38715,9 @@ var render = function() {
                 "card-header d-flex justify-content-between align-items-center"
             },
             [
-              _c("h5", { staticClass: "mb-0" }, [_vm._v("Edit Category")]),
+              _c("h5", { staticClass: "mb-0" }, [
+                _vm._v("Edit Category " + _vm._s(_vm.categoryForm.name))
+              ]),
               _vm._v(" "),
               _c(
                 "router-link",
@@ -38712,7 +38740,7 @@ var render = function() {
                     on: {
                       submit: function($event) {
                         $event.preventDefault()
-                        return _vm.createCategory.apply(null, arguments)
+                        return _vm.updateCategory.apply(null, arguments)
                       }
                     }
                   },
@@ -38773,7 +38801,7 @@ var render = function() {
                         staticClass: "btn btn-primary",
                         attrs: { type: "submit" }
                       },
-                      [_vm._v("Submit")]
+                      [_vm._v("Update Category")]
                     )
                   ]
                 )
@@ -38827,7 +38855,7 @@ var render = function() {
                   staticClass: "btn btn-primary",
                   attrs: { to: { name: "create-category" } }
                 },
-                [_vm._v("Create Category")]
+                [_vm._v("Create Category\n                    ")]
               )
             ],
             1
@@ -38843,12 +38871,17 @@ var render = function() {
                   return _c("tr", { key: category.id }, [
                     _c("td", [_vm._v(_vm._s(category.id))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(category.name))]),
+                    _c("td", { attrs: { width: "30%" } }, [
+                      _vm._v(_vm._s(category.name))
+                    ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(category.slug))]),
+                    _c("td", { attrs: { width: "40%" } }, [
+                      _vm._v(_vm._s(category.slug))
+                    ]),
                     _vm._v(" "),
                     _c(
                       "td",
+                      { attrs: { width: "20%" } },
                       [
                         _c(
                           "router-link",
@@ -38861,14 +38894,23 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Edit")]
+                          [_vm._v("Edit\n                                    ")]
                         ),
                         _vm._v(" "),
                         _c(
                           "a",
                           {
                             staticClass: "btn btn-danger btn-sm",
-                            attrs: { href: "" }
+                            attrs: {
+                              onclick:
+                                "return confirm('Do you want to delete this?')"
+                            },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.deleteCategory(category)
+                              }
+                            }
                           },
                           [_vm._v("Delete")]
                         )
@@ -38895,11 +38937,11 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("#")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Name")]),
+        _c("th", { attrs: { width: "30%" } }, [_vm._v("Name")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Slug")]),
+        _c("th", { attrs: { width: "40%" } }, [_vm._v("Slug")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Action")])
+        _c("th", { attrs: { width: "20%" } }, [_vm._v("Action")])
       ])
     ])
   }

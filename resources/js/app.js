@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import routes from './router/index'
-
 require('./bootstrap');
 
 // window.Vue = require('vue').default;

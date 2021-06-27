@@ -14,7 +14,10 @@
                                 <form @submit.prevent="createCategory">
                                     <div class="form-group">
                                         <label for="categoryName">Category Name</label>
-                                        <input type="text" v-model="name" class="form-control" id="categoryName" placeholder="Category Name">
+
+                                        <input v-model="categoryForm.name" type="text" name="name" id="categoryName" placeholder="Category Name"
+                                                :class="{'is-invalid':categoryForm.errors.has('name')}" class="form-control">
+                                        <div v-if="categoryForm.errors.has('name')" v-html="categoryForm.errors.get('name')" />
                                     </div>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </form>
@@ -28,16 +31,22 @@
 </template>
 
 <script>
+import Form from 'vform'
 export default {
     data() {
-        return{
-            name: ''
+        return {
+            categoryForm: new Form({
+                name: '',
+            }),
         }
     },
     methods: {
-        createCategory(){
-            axios.post('/api/category',{name: this.name}).then(response =>{
+        createCategory() {
+            /*axios.post('/api/category', {name: this.name}).then(response => {
                 console.log(response);
+            })*/
+            this.categoryForm.post('/api/category').then(({response}) => {
+                this.categoryForm.name = '';
             })
         }
     }

@@ -45,8 +45,13 @@ export default {
             /*axios.post('/api/category', {name: this.name}).then(response => {
                 console.log(response);
             })*/
-            this.categoryForm.post('/api/category').then(({response}) => {
+            this.categoryForm.post('/api/category').then(({data}) => {
                 this.categoryForm.name = '';
+                this.$toast.success({
+                    title:'Success',
+                    message:'Category created successfully.'
+                })
+
             })
         }
     }

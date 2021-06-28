@@ -4,9 +4,8 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Product Categories</h5>
-                        <router-link :to="{name:'create-category'}" class="btn btn-primary">Create Category
-                        </router-link>
+                        <h5 class="mb-0">Product List</h5>
+                        <router-link :to="{name:'create-product'}" class="btn btn-primary">Create Product</router-link>
                     </div>
 
                     <div class="card-body">
@@ -19,16 +18,16 @@
                                     <th width="20%">Action</th>
                                 </tr>
                             </thead>
-                            <tbody v-if="categories.length"v>
-                                <tr v-for="category in categories" :key="category.id">
-                                    <td>{{ category.id }}</td>
-                                    <td width="30%">{{ category.name }}</td>
-                                    <td width="40%">{{ category.slug }}</td>
+                            <tbody v-if="products.length">
+                                <tr v-for="product in products" :key="product.id">
+                                    <td>{{ product.id }}</td>
+                                    <td width="30%">{{ product.name }}</td>
+                                    <td width="40%">{{ product.slug }}</td>
                                     <td width="20%">
-                                        <router-link :to="{name:'edit-category',params:{slug:category.slug}}"
+                                        <router-link :to="{name:'edit-product',params:{slug:product.slug}}"
                                                      class="btn btn-primary btn-sm">Edit
                                         </router-link>
-                                        <a @click.prevent="deleteCategory(category)"
+                                        <a @click.prevent="deleteProduct(product)"
                                            onclick="return confirm('Do you want to delete this?')"
                                            class="btn btn-danger btn-sm">Delete</a>
                                     </td>
@@ -37,7 +36,7 @@
                             <tbody v-else>
                                 <tr>
                                     <td colspan="4">
-                                        <h5 class="text-center mt-4 mb-4">No Categories Found!</h5>
+                                        <h5 class="text-center mt-4 mb-4">No Products Found!</h5>
                                     </td>
                                 </tr>
                             </tbody>
@@ -53,31 +52,30 @@
 export default {
     data() {
         return {
-            categories: [],
+            products: [],
         }
     },
     methods: {
-        loadCategories() {
-            axios.get('/api/category').then(response => {
-                this.categories = response.data;
+        loadProducts() {
+            axios.get('/api/product').then(response => {
+                this.products = response.data;
             })
         },
-        deleteCategory(category) {
-            axios.delete(`/api/category/${category.slug}`).then(() => {
+        deleteProduct(product) {
+            axios.delete(`/api/product/${product.slug}`).then(() => {
                 this.$toast.success({
                     title: 'Success',
-                    message: 'Category deleted successfully.'
+                    message: 'Product deleted successfully.'
                 })
             });
 
-            let index = this.categories.indexOf(category);
-            this.categories.splice(index,1);
+            let index = this.products.indexOf(product);
+            this.products.splice(index,1);
         },
 
     },
     mounted() {
-        this.loadCategories();
-        this.loadCategories();
+        this.loadProducts();
     }
 }
 </script>

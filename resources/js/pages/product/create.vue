@@ -97,6 +97,7 @@ export default {
         onImageChange(e){
             const file = e.target.files[0]
             // Do some client side validation...
+            //image upload npm command = "npm install object-to-formdata"
             this.productForm.image = file
         },
     }

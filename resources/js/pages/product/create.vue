@@ -32,7 +32,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="productImage">Product Image</label>
-                                        <input type="file" id="productImage"
+                                        <input type="file" id="productImage" @change="onImageChange"
                                                :class="{'is-invalid':productForm.errors.has('image')}"
                                                class="form-control-file">
                                         <div v-if="productForm.errors.has('image')"
@@ -60,6 +60,7 @@
 
 <script>
 import Form from 'vform'
+import { objectToFormData } from 'object-to-formdata'
 
 export default {
     data() {
@@ -74,10 +75,15 @@ export default {
     },
     methods: {
         createProduct() {
-            /*axios.post('/api/category', {name: this.name}).then(response => {
-                console.log(response);
-            })*/
-            this.productForm.post('/api/product').then(({data}) => {
+            this.productForm.post('/api/product',{
+                transformRequest: [function (data, headers) {
+                    return objectToFormData(data)
+                }],
+                onUploadProgress: e => {
+                    // Do whatever you want with the progress event
+                    console.log(e)
+                }
+            }).then(({data}) => {
                 this.productForm.title = '';
                 this.productForm.price = '';
                 this.productForm.image = '';
@@ -87,7 +93,12 @@ export default {
                     message: 'Product created successfully.'
                 })
             })
-        }
+        },
+        onImageChange(e){
+            const file = e.target.files[0]
+            // Do some client side validation...
+            this.productForm.image = file
+        },
     }
 }
 </script>

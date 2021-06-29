@@ -2207,12 +2207,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       productForm: new vform__WEBPACK_IMPORTED_MODULE_0__.default({
-        name: ''
+        title: '',
+        image: '',
+        price: '',
+        description: ''
       })
     };
   },
@@ -2225,7 +2257,10 @@ __webpack_require__.r(__webpack_exports__);
       })*/
       this.productForm.post('/api/product').then(function (_ref) {
         var data = _ref.data;
-        _this.productForm.name = '';
+        _this.productForm.title = '';
+        _this.productForm.price = '';
+        _this.productForm.image = '';
+        _this.productForm.description = '';
 
         _this.$toast.success({
           title: 'Success',
@@ -2508,6 +2543,7 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vue_router__WEBPACK_IMPORTED_MODULE
 
 var routes = new vue_router__WEBPACK_IMPORTED_MODULE_1__.default({
   mode: 'history',
+  linkExactActiveClass: 'active',
   routes: [{
     path: '/',
     component: _pages_home__WEBPACK_IMPORTED_MODULE_2__.default,
@@ -39588,7 +39624,7 @@ var render = function() {
                   [
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", { attrs: { for: "productName" } }, [
-                        _vm._v("Product Name")
+                        _vm._v("Product Title")
                       ]),
                       _vm._v(" "),
                       _c("input", {
@@ -39596,21 +39632,21 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.productForm.name,
-                            expression: "productForm.name"
+                            value: _vm.productForm.title,
+                            expression: "productForm.title"
                           }
                         ],
                         staticClass: "form-control",
                         class: {
-                          "is-invalid": _vm.productForm.errors.has("name")
+                          "is-invalid": _vm.productForm.errors.has("title")
                         },
                         attrs: {
                           type: "text",
-                          name: "name",
+                          name: "title",
                           id: "productName",
-                          placeholder: "Product Name"
+                          placeholder: "Product Title"
                         },
-                        domProps: { value: _vm.productForm.name },
+                        domProps: { value: _vm.productForm.title },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
@@ -39618,18 +39654,144 @@ var render = function() {
                             }
                             _vm.$set(
                               _vm.productForm,
-                              "name",
+                              "title",
                               $event.target.value
                             )
                           }
                         }
                       }),
                       _vm._v(" "),
-                      _vm.productForm.errors.has("name")
+                      _vm.productForm.errors.has("title")
                         ? _c("div", {
                             domProps: {
                               innerHTML: _vm._s(
-                                _vm.productForm.errors.get("name")
+                                _vm.productForm.errors.get("title")
+                              )
+                            }
+                          })
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "productPrice" } }, [
+                        _vm._v("Product Price")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.productForm.price,
+                            expression: "productForm.price"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.productForm.errors.has("price")
+                        },
+                        attrs: {
+                          type: "text",
+                          name: "price",
+                          id: "productPrice",
+                          placeholder: "Product Price"
+                        },
+                        domProps: { value: _vm.productForm.price },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.productForm,
+                              "price",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.productForm.errors.has("price")
+                        ? _c("div", {
+                            domProps: {
+                              innerHTML: _vm._s(
+                                _vm.productForm.errors.get("price")
+                              )
+                            }
+                          })
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "productImage" } }, [
+                        _vm._v("Product Image")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass: "form-control-file",
+                        class: {
+                          "is-invalid": _vm.productForm.errors.has("image")
+                        },
+                        attrs: { type: "file", id: "productImage" }
+                      }),
+                      _vm._v(" "),
+                      _vm.productForm.errors.has("image")
+                        ? _c("div", {
+                            domProps: {
+                              innerHTML: _vm._s(
+                                _vm.productForm.errors.get("image")
+                              )
+                            }
+                          })
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "productDescription" } }, [
+                        _vm._v("Product Description")
+                      ]),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.productForm.description,
+                            expression: "productForm.description"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.productForm.errors.has(
+                            "description"
+                          )
+                        },
+                        attrs: {
+                          type: "text",
+                          name: "description",
+                          id: "productDescription",
+                          placeholder: "Product Description"
+                        },
+                        domProps: { value: _vm.productForm.description },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.productForm,
+                              "description",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.productForm.errors.has("description")
+                        ? _c("div", {
+                            domProps: {
+                              innerHTML: _vm._s(
+                                _vm.productForm.errors.get("description")
                               )
                             }
                           })

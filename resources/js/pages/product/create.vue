@@ -61,7 +61,6 @@
 <script>
 import Form from 'vform'
 import { objectToFormData } from 'object-to-formdata'
-
 export default {
     data() {
         return {

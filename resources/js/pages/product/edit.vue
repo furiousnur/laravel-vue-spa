@@ -4,7 +4,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Edit Product {{productForm.title}}</h5>
+                        <h5 class="mb-0">Edit Product - {{productForm.title}}</h5>
                         <router-link :to="{name:'product-list'}" class="btn btn-primary">Product List</router-link>
                     </div>
 
@@ -70,24 +70,24 @@ export default {
         }
     },
     methods: {
-        updateProduct() {
-            let slug = this.$route.params.slug;
-
-            this.productForm.put(`/api/category/${slug}`).then(() => {
-                this.$toast.success({
-                    title:'Success',
-                    message:'Category updated successfully.'
-                })
-            })
-        },
         loadProduct(){
             let slug = this.$route.params.slug;
-            axios.get(`/api/category/${slug}/edit`, {title: this.title}).then(response => {
+            axios.get(`/api/product/${slug}/edit`).then(response => {
                 this.productForm.title = response.data.title;
                 this.productForm.price = response.data.price;
                 this.productForm.image = response.data.image;
                 this.productForm.description = response.data.description;
                 this.productForm.status = response.data.status;
+            })
+        },
+        updateProduct() {
+            let slug = this.$route.params.slug;
+
+            this.productForm.put(`/api/product/${slug}`).then(() => {
+                this.$toast.success({
+                    title:'Success',
+                    message:'Product updated successfully.'
+                })
             })
         },
     },

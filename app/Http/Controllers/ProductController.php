@@ -57,8 +57,8 @@ class ProductController extends Controller
             $imageName = time().'_'. uniqid() .'.'.$request->image->getClientOriginalExtension();
             $request->image->move(public_path('storage/product'), $imageName);
             $product->image = '/storage/product/' . $imageName;
+            $product->save();
         }
-        $product->save();
 
         return response()->json($product, 200);
     }
@@ -87,7 +87,7 @@ class ProductController extends Controller
         if ($product){
             return response()->json($product,200);
         }else{
-            return response()->json($slug,404);
+            return response()->json('failed',404);
         }
     }
 
@@ -95,12 +95,28 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Product  $slug
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $slug)
     {
-        //
+        $product = Product::where('slug',$slug)->first();
+
+        $this->validate($request,[
+            'title' => 'required|unique:products,title,'.$product->id,
+            'price' => 'required|integer',
+            'image' => 'nullable|max:2048|image',
+            'description' => 'required',
+        ]);
+
+        $product->title = $request->title;
+        $product->slug = Str::slug($request->title);
+        $product->description = $request->description;
+        $product->image = $request->image;
+        $product->price = $request->price;
+        $product->update();
+
+        return response()->json('Success', 200);
     }
 
     /**

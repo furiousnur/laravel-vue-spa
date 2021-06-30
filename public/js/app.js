@@ -2370,29 +2370,27 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    updateProduct: function updateProduct() {
+    loadProduct: function loadProduct() {
       var _this = this;
 
       var slug = this.$route.params.slug;
-      this.productForm.put("/api/category/".concat(slug)).then(function () {
-        _this.$toast.success({
-          title: 'Success',
-          message: 'Category updated successfully.'
-        });
+      axios.get("/api/product/".concat(slug, "/edit")).then(function (response) {
+        _this.productForm.title = response.data.title;
+        _this.productForm.price = response.data.price;
+        _this.productForm.image = response.data.image;
+        _this.productForm.description = response.data.description;
+        _this.productForm.status = response.data.status;
       });
     },
-    loadProduct: function loadProduct() {
+    updateProduct: function updateProduct() {
       var _this2 = this;
 
       var slug = this.$route.params.slug;
-      axios.get("/api/category/".concat(slug, "/edit"), {
-        title: this.title
-      }).then(function (response) {
-        _this2.productForm.title = response.data.title;
-        _this2.productForm.price = response.data.price;
-        _this2.productForm.image = response.data.image;
-        _this2.productForm.description = response.data.description;
-        _this2.productForm.status = response.data.status;
+      this.productForm.put("/api/product/".concat(slug)).then(function () {
+        _this2.$toast.success({
+          title: 'Success',
+          message: 'Product updated successfully.'
+        });
       });
     }
   },
@@ -40010,7 +40008,7 @@ var render = function() {
             },
             [
               _c("h5", { staticClass: "mb-0" }, [
-                _vm._v("Edit Product " + _vm._s(_vm.productForm.title))
+                _vm._v("Edit Product - " + _vm._s(_vm.productForm.title))
               ]),
               _vm._v(" "),
               _c(

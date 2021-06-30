@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -56,8 +57,8 @@ class ProductController extends Controller
             $imageName = time().'_'. uniqid() .'.'.$request->image->getClientOriginalExtension();
             $request->image->move(public_path('storage/product'), $imageName);
             $product->image = '/storage/product/' . $imageName;
-            $product->save();
         }
+        $product->save();
 
         return response()->json($product, 200);
     }
@@ -79,9 +80,15 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($slug)
     {
-        //
+        $product = Product::where('slug',$slug)->first();
+
+        if ($product){
+            return response()->json($product,200);
+        }else{
+            return response()->json($slug,404);
+        }
     }
 
     /**

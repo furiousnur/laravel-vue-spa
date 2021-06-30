@@ -13,17 +13,27 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th width="30%">Name</th>
-                                    <th width="40%">Slug</th>
-                                    <th width="20%">Action</th>
+                                    <th width="5%">Image</th>
+                                    <th width="20%">Title</th>
+                                    <th width="10%">Price</th>
+                                    <th width="20%">Slug</th>
+                                    <th width="25%">Description</th>
+                                    <th width="5%">Status</th>
+                                    <th width="15%">Action</th>
                                 </tr>
                             </thead>
                             <tbody v-if="products.length">
                                 <tr v-for="product in products" :key="product.id">
                                     <td>{{ product.id }}</td>
-                                    <td width="30%">{{ product.name }}</td>
-                                    <td width="40%">{{ product.slug }}</td>
-                                    <td width="20%">
+                                    <td width="5%">
+                                        <img :src="product.image" alt="" class="img-fluid" style="max-height: 150px; max-width: 100px; overflow: hidden">
+                                    </td>
+                                    <td width="20%">{{ product.title }}</td>
+                                    <td width="10%">{{ product.price }}</td>
+                                    <td width="20%">{{ product.slug }}</td>
+                                    <td width="25%">{{ product.description }}</td>
+                                    <td width="5%">{{ product.status }}</td>
+                                    <td width="15%">
                                         <router-link :to="{name:'edit-product',params:{slug:product.slug}}"
                                                      class="btn btn-primary btn-sm">Edit
                                         </router-link>

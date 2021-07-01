@@ -11,7 +11,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6 offset-3">
-                                <form @submit.prevent="updateProduct">
+                                <form @submit.prevent="saveProduct">
                                     <div class="form-group">
                                         <label for="productName">Product Title</label>
                                         <input v-model="productForm.title" type="text" name="title" id="productName" placeholder="Product Title"
@@ -27,13 +27,18 @@
                                         <div v-if="productForm.errors.has('price')"
                                              v-html="productForm.errors.get('price')"/>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="productImage">Product Image</label>
-                                        <input type="file" id="productImage"
-                                               :class="{'is-invalid':productForm.errors.has('image')}"
-                                               class="form-control-file">
-                                        <div v-if="productForm.errors.has('image')"
-                                             v-html="productForm.errors.get('image')"/>
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="form-group">
+                                                <label for="productImage">Product Image</label>
+                                                <input type="file" id="productImage" :class="{'is-invalid':productForm.errors.has('image')}"
+                                                       class="form-control-file">
+                                                <div v-if="productForm.errors.has('image')" v-html="productForm.errors.get('image')"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-4" v-if="image">
+                                            <img :src="image" alt="" class="img-fluid" style="max-height: 150px; width: 100%; overflow: hidden">
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="productDescription">Product Description</label>
@@ -57,6 +62,7 @@
 
 <script>
 import Form from 'vform'
+import { objectToFormData } from 'object-to-formdata'
 export default {
     data() {
         return {
@@ -65,34 +71,52 @@ export default {
                 image: '',
                 price: '',
                 description: '',
-                status: '',
+                _method: 'put',
             }),
         }
     },
     methods: {
-        loadProduct(){
+        loadProductData(){
             let slug = this.$route.params.slug;
             axios.get(`/api/product/${slug}/edit`).then(response => {
-                this.productForm.title = response.data.title;
-                this.productForm.price = response.data.price;
-                this.productForm.image = response.data.image;
-                this.productForm.description = response.data.description;
-                this.productForm.status = response.data.status;
+                let product = response.data;
+                this.productForm.title = product.title;
+                this.productForm.price = product.price;
+                this.image = product.image;
+                this.productForm.description = product.description;
             })
         },
-        updateProduct() {
-            let slug = this.$route.params.slug;
+        saveProduct() {
+            let id = this.$route.params.id;
 
-            this.productForm.put(`/api/product/${slug}`).then(() => {
+            this.productForm.post('/api/product/'+id,{
+                transformRequest: [function (data, headers) {
+                    return objectToFormData(data)
+                }],
+                onUploadProgress: e => {
+                    // Do whatever you want with the progress event
+                    console.log(e)
+                }
+            }).then(({data}) => {
+                this.productForm.title = '';
+                this.productForm.price = '';
+                this.productForm.image = '';
+                this.productForm.description = '';
                 this.$toast.success({
-                    title:'Success',
-                    message:'Product updated successfully.'
+                    title: 'Success',
+                    message: 'Product updated successfully.'
                 })
             })
         },
+        onImageChange(e){
+            const file = e.target.files[0]
+            // Do some client side validation...
+            //image upload npm command = "npm install object-to-formdata"
+            this.productForm.image = file
+        },
     },
-    mounted(){
-        this.loadProduct();
+    mounted() {
+        this.loadProductData();
     }
 }
 </script>

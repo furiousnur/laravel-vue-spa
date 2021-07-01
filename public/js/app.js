@@ -2299,6 +2299,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.es.js");
+/* harmony import */ var object_to_formdata__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! object-to-formdata */ "./node_modules/object-to-formdata/dist/index.module.js");
+/* harmony import */ var object_to_formdata__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(object_to_formdata__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -2356,6 +2358,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2365,37 +2373,57 @@ __webpack_require__.r(__webpack_exports__);
         image: '',
         price: '',
         description: '',
-        status: ''
+        _method: 'put'
       })
     };
   },
   methods: {
-    loadProduct: function loadProduct() {
+    loadProductData: function loadProductData() {
       var _this = this;
 
       var slug = this.$route.params.slug;
       axios.get("/api/product/".concat(slug, "/edit")).then(function (response) {
-        _this.productForm.title = response.data.title;
-        _this.productForm.price = response.data.price;
-        _this.productForm.image = response.data.image;
-        _this.productForm.description = response.data.description;
-        _this.productForm.status = response.data.status;
+        var product = response.data;
+        _this.productForm.title = product.title;
+        _this.productForm.price = product.price;
+        _this.image = product.image;
+        _this.productForm.description = product.description;
       });
     },
-    updateProduct: function updateProduct() {
+    saveProduct: function saveProduct() {
       var _this2 = this;
 
-      var slug = this.$route.params.slug;
-      this.productForm.put("/api/product/".concat(slug)).then(function () {
+      var id = this.$route.params.id;
+      this.productForm.post('/api/product/' + id, {
+        transformRequest: [function (data, headers) {
+          return (0,object_to_formdata__WEBPACK_IMPORTED_MODULE_1__.objectToFormData)(data);
+        }],
+        onUploadProgress: function onUploadProgress(e) {
+          // Do whatever you want with the progress event
+          console.log(e);
+        }
+      }).then(function (_ref) {
+        var data = _ref.data;
+        _this2.productForm.title = '';
+        _this2.productForm.price = '';
+        _this2.productForm.image = '';
+        _this2.productForm.description = '';
+
         _this2.$toast.success({
           title: 'Success',
           message: 'Product updated successfully.'
         });
       });
+    },
+    onImageChange: function onImageChange(e) {
+      var file = e.target.files[0]; // Do some client side validation...
+      //image upload npm command = "npm install object-to-formdata"
+
+      this.productForm.image = file;
     }
   },
   mounted: function mounted() {
-    this.loadProduct();
+    this.loadProductData();
   }
 });
 
@@ -40032,7 +40060,7 @@ var render = function() {
                     on: {
                       submit: function($event) {
                         $event.preventDefault()
-                        return _vm.updateProduct.apply(null, arguments)
+                        return _vm.saveProduct.apply(null, arguments)
                       }
                     }
                   },
@@ -40137,27 +40165,45 @@ var render = function() {
                         : _vm._e()
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "productImage" } }, [
-                        _vm._v("Product Image")
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-8" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "productImage" } }, [
+                            _vm._v("Product Image")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticClass: "form-control-file",
+                            class: {
+                              "is-invalid": _vm.productForm.errors.has("image")
+                            },
+                            attrs: { type: "file", id: "productImage" }
+                          }),
+                          _vm._v(" "),
+                          _vm.productForm.errors.has("image")
+                            ? _c("div", {
+                                domProps: {
+                                  innerHTML: _vm._s(
+                                    _vm.productForm.errors.get("image")
+                                  )
+                                }
+                              })
+                            : _vm._e()
+                        ])
                       ]),
                       _vm._v(" "),
-                      _c("input", {
-                        staticClass: "form-control-file",
-                        class: {
-                          "is-invalid": _vm.productForm.errors.has("image")
-                        },
-                        attrs: { type: "file", id: "productImage" }
-                      }),
-                      _vm._v(" "),
-                      _vm.productForm.errors.has("image")
-                        ? _c("div", {
-                            domProps: {
-                              innerHTML: _vm._s(
-                                _vm.productForm.errors.get("image")
-                              )
-                            }
-                          })
+                      _vm.image
+                        ? _c("div", { staticClass: "col-4" }, [
+                            _c("img", {
+                              staticClass: "img-fluid",
+                              staticStyle: {
+                                "max-height": "150px",
+                                width: "100%",
+                                overflow: "hidden"
+                              },
+                              attrs: { src: _vm.image, alt: "" }
+                            })
+                          ])
                         : _vm._e()
                     ]),
                     _vm._v(" "),

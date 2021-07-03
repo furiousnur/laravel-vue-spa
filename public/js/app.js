@@ -2373,7 +2373,8 @@ __webpack_require__.r(__webpack_exports__);
         image: '',
         price: '',
         description: '',
-        _method: 'put'
+        _method: 'put',
+        id: ''
       })
     };
   },
@@ -2384,6 +2385,7 @@ __webpack_require__.r(__webpack_exports__);
       var slug = this.$route.params.slug;
       axios.get("/api/product/".concat(slug, "/edit")).then(function (response) {
         var product = response.data;
+        _this.id = product.id;
         _this.productForm.title = product.title;
         _this.productForm.price = product.price;
         _this.productForm.image = product.image;
@@ -2393,11 +2395,12 @@ __webpack_require__.r(__webpack_exports__);
     saveProduct: function saveProduct() {
       var _this2 = this;
 
-      var id = this.$route.params.id;
+      // let slug = this.$route.params.slug;
+      var id = this.id;
       this.productForm.post('/api/product/' + id, {
-        transformRequest: [function (data, headers) {
-          return (0,object_to_formdata__WEBPACK_IMPORTED_MODULE_1__.objectToFormData)(data);
-        }],
+        // transformRequest: [function (data, headers) {
+        //     return objectToFormData(data)
+        // }],
         onUploadProgress: function onUploadProgress(e) {
           // Do whatever you want with the progress event
           console.log(e);

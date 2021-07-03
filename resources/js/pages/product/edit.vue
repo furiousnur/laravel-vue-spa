@@ -72,6 +72,7 @@ export default {
                 price: '',
                 description: '',
                 _method: 'put',
+                id: ''
             }),
         }
     },
@@ -80,6 +81,7 @@ export default {
             let slug = this.$route.params.slug;
             axios.get(`/api/product/${slug}/edit`).then(response => {
                 let product = response.data;
+                this.id = product.id;
                 this.productForm.title = product.title;
                 this.productForm.price = product.price;
                 this.productForm.image = product.image;
@@ -87,11 +89,12 @@ export default {
             })
         },
         saveProduct() {
-            let id = this.$route.params.id;
-            this.productForm.post('/api/product/'+id,{
-                transformRequest: [function (data, headers) {
-                    return objectToFormData(data)
-                }],
+            // let slug = this.$route.params.slug;
+            let id = this.id;
+            this .productForm.post('/api/product/'+id,{
+                // transformRequest: [function (data, headers) {
+                //     return objectToFormData(data)
+                // }],
                 onUploadProgress: e => {
                     // Do whatever you want with the progress event
                     console.log(e)

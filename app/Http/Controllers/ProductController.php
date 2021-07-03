@@ -98,15 +98,15 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $slug
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
-//        return response()->json(\request()->all(), 200);
-//        $product = Product::where('slug',$slug)->first();
+//        return response()->json($id, 200);
+        $product = Product::where('id',$id)->first();
 
         $this->validate($request,[
             'title' => 'required|unique:products,title,'.$product->id,
             'price' => 'required|integer',
-            'image' => 'sometimes|nullable|max:2048|image',
+//            'image' => 'sometimes|nullable|max:2048|image',
             'description' => 'required',
         ]);
 

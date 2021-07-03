@@ -100,8 +100,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-//        return response()->json($id, 200);
-        $product = Product::where('id',$id)->first();
+        $product = Product::findOrFail($id);
 
         $this->validate($request,[
             'title' => 'required|unique:products,title,'.$product->id,

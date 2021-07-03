@@ -36,8 +36,8 @@
                                                 <div v-if="productForm.errors.has('image')" v-html="productForm.errors.get('image')"/>
                                             </div>
                                         </div>
-                                        <div class="col-4" v-if="image">
-                                            <img :src="image" alt="" class="img-fluid" style="max-height: 150px; width: 100%; overflow: hidden">
+                                        <div class="col-4" v-if="productForm.image">
+                                            <img  :src="productForm.image" alt="image" class="img-fluid" style="max-height: 150px; width: 100%; overflow: hidden">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -82,13 +82,12 @@ export default {
                 let product = response.data;
                 this.productForm.title = product.title;
                 this.productForm.price = product.price;
-                this.image = product.image;
+                this.productForm.image = product.image;
                 this.productForm.description = product.description;
             })
         },
         saveProduct() {
             let id = this.$route.params.id;
-
             this.productForm.post('/api/product/'+id,{
                 transformRequest: [function (data, headers) {
                     return objectToFormData(data)

@@ -22,7 +22,8 @@
         "sass-loader": "^11.0.1",
         "vue": "^2.6.12",
         "vue-loader": "^15.9.7",
-        "vue-template-compiler": "^2.6.12"
+        "vue-template-compiler": "^2.6.12",
+        "vue2-collapse": "^1.0.15"
     },
     "dependencies": {
         "cxlt-vue2-toastr": "^1.1.1",

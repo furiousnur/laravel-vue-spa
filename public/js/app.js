@@ -2386,7 +2386,7 @@ __webpack_require__.r(__webpack_exports__);
         var product = response.data;
         _this.productForm.title = product.title;
         _this.productForm.price = product.price;
-        _this.image = product.image;
+        _this.productForm.image = product.image;
         _this.productForm.description = product.description;
       });
     },
@@ -40192,7 +40192,7 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _vm.image
+                      _vm.productForm.image
                         ? _c("div", { staticClass: "col-4" }, [
                             _c("img", {
                               staticClass: "img-fluid",
@@ -40201,7 +40201,10 @@ var render = function() {
                                 width: "100%",
                                 overflow: "hidden"
                               },
-                              attrs: { src: _vm.image, alt: "" }
+                              attrs: {
+                                src: _vm.productForm.image,
+                                alt: "image"
+                              }
                             })
                           ])
                         : _vm._e()

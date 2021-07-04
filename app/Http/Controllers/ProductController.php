@@ -105,7 +105,7 @@ class ProductController extends Controller
         $this->validate($request,[
             'title' => 'required|unique:products,title,'.$product->id,
             'price' => 'required|integer',
-//            'image' => 'sometimes|nullable|max:2048|image',
+//            'image' => 'sometimes|nullable|image|max:2048',
             'description' => 'required',
         ]);
 
@@ -128,6 +128,13 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        if ($product){
+            if ($product->image && file_exists($product->image)){
+                unlink($product->image);
+            }
+            $product->delete();
+        }else{
+            return response()->json('Product Not found', 404);
+        }
     }
 }

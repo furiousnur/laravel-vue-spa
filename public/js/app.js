@@ -2395,7 +2395,6 @@ __webpack_require__.r(__webpack_exports__);
     saveProduct: function saveProduct() {
       var _this2 = this;
 
-      // let slug = this.$route.params.slug;
       var id = this.id;
       this.productForm.post('/api/product/' + id, {
         // transformRequest: [function (data, headers) {
@@ -2407,10 +2406,10 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (_ref) {
         var data = _ref.data;
-        _this2.productForm.title = '';
-        _this2.productForm.price = '';
-        _this2.productForm.image = '';
-        _this2.productForm.description = '';
+        _this2.title = data.title;
+        _this2.price = data.price;
+        _this2.image = data.image;
+        _this2.description = data.description;
 
         _this2.$toast.success({
           title: 'Success',
@@ -2520,7 +2519,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteProduct: function deleteProduct(product) {
       var _this2 = this;
 
-      axios["delete"]("/api/product/".concat(product.slug)).then(function () {
+      axios["delete"]("/api/product/".concat(product.id)).then(function () {
         _this2.$toast.success({
           title: 'Success',
           message: 'Product deleted successfully.'

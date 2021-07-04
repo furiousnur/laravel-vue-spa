@@ -72,7 +72,7 @@ export default {
             })
         },
         deleteProduct(product) {
-            axios.delete(`/api/product/${product.slug}`).then(() => {
+            axios.delete(`/api/product/${product.id}`).then(() => {
                 this.$toast.success({
                     title: 'Success',
                     message: 'Product deleted successfully.'

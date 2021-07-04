@@ -63,6 +63,7 @@
 <script>
 import Form from 'vform'
 import { objectToFormData } from 'object-to-formdata'
+
 export default {
     data() {
         return {
@@ -89,8 +90,8 @@ export default {
             })
         },
         saveProduct() {
-            // let slug = this.$route.params.slug;
             let id = this.id;
+
             this .productForm.post('/api/product/'+id,{
                 // transformRequest: [function (data, headers) {
                 //     return objectToFormData(data)
@@ -100,10 +101,10 @@ export default {
                     console.log(e)
                 }
             }).then(({data}) => {
-                this.productForm.title = '';
-                this.productForm.price = '';
-                this.productForm.image = '';
-                this.productForm.description = '';
+                this.title = data.title;
+                this.price = data.price;
+                this.image = data.image;
+                this.description = data.description;
                 this.$toast.success({
                     title: 'Success',
                     message: 'Product updated successfully.'

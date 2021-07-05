@@ -51,7 +51,6 @@ export default {
                     title:'Success',
                     message:'Category created successfully.'
                 })
-
             })
         }
     }

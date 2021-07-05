@@ -20,6 +20,9 @@
                         <li class="nav-item">
                             <router-link class="nav-link" :to="{name:'login'}">Login</router-link>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" @click.prevent="logout">Logout</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -28,7 +31,17 @@
 </template>
 <script>
     export default {
-
+        methods:{
+            logout(){
+                axios.post('/logout').then(resposne => {
+                    this.$router.push({name:'login'});
+                    this.$toast.success({
+                        title:'Success',
+                        message:'Logout successfully.'
+                    })
+                })
+            }
+        }
     }
 </script>
 <style>

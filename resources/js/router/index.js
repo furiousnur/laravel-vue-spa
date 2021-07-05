@@ -17,6 +17,9 @@ import EditProduct from '../pages/product/edit'
 //Authentication Route List
 import Login from '../pages/auth/login'
 
+//Dashboard Route List
+import Dashboard from '../pages/dashboard/index'
+
 const routes = new VueRouter({
     mode: 'history',
     linkExactActiveClass: 'active',
@@ -53,6 +56,10 @@ const routes = new VueRouter({
             path: '/auth/login',
             component: Login,
             name: 'login',
+        }, {
+            path: '/dashboard',
+            component: Dashboard,
+            name: 'dashboard',
         }
     ]
 });

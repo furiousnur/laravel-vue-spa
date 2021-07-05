@@ -8,17 +8,23 @@
                             Login
                         </div>
                         <div class="card-body">
-                            <form action="" method="post" @click.prevent="login()">
+                            <form action="" method="post" @submit.prevent="login()">
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" name="email" placeholder="Email" id="email" class="form-control">
+                                    <input id="email" v-model="loginForm.email" class="form-control" name="email" :class="{'is-invalid':loginForm.errors.has('email')}"
+                                           placeholder="Email" type="email">
+                                    <div v-if="loginForm.errors.has('email')" v-html="loginForm.errors.get('email')"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Password</label>
-                                    <input type="password" name="password" placeholder="Password" id="password" class="form-control">
+                                    <input id="password" v-model="loginForm.password" :class="{'is-invalid':loginForm.errors.has('password')}"
+                                           class="form-control" name="password" placeholder="Password"
+                                           type="password">
+                                    <div v-if="loginForm.errors.has('password')"
+                                         v-html="loginForm.errors.get('password')"/>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-success px-4">Login</button>
+                                    <button class="btn btn-success px-4" type="submit">Login</button>
                                 </div>
                             </form>
                         </div>
@@ -30,32 +36,42 @@
 </template>
 
 <script>
+import Form from 'vform'
+
 export default {
     data() {
         return {
-
+            loginForm: new Form({
+                email: '',
+                password: '',
+            }),
         }
     },
     methods: {
-        login(){
+        login() {
             axios.get('/sanctum/csrf-cookie').then(response => {
-                axios.post('/login',{
-                    email:'nuralam@gmail.com',
-                    'password':'12345678'
+                this.loginForm.post('/login', {
                 }).then(response => {
-                    console.log(response);
                     this.getUserData();
+
+                    this.$toast.success({
+                        title:'Success',
+                        message:'Login successfully.'
+                    })
+
+                    this.$router.push({name:'dashboard'});
                 })
             });
         },
-        getUserData(){
+        getUserData() {
             axios.get('/api/user').then(response => {
-                console.log(response.data);
+                let user = response.data;
+                this.$store.commit('SET_USER', user);
             })
         }
     },
     mounted() {
-        this.getUserData();
+
     }
 }
 </script>

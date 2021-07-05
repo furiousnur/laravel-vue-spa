@@ -112,8 +112,7 @@ class ProductController extends Controller
         $product->update([
             'title' => $request->title,
             'slug' => Str::slug($request->title),
-            'price' => $request->price,
-            'image' => 'image',
+            'price' => $request->price, 
             'description' => $request->description,
         ]);
 

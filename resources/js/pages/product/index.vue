@@ -34,12 +34,8 @@
                                     <td width="25%">{{ product.description }}</td>
                                     <td width="5%">{{ product.status }}</td>
                                     <td width="15%">
-                                        <router-link :to="{name:'edit-product',params:{slug:product.slug}}"
-                                                     class="btn btn-primary btn-sm">Edit
-                                        </router-link>
-                                        <a @click.prevent="deleteProduct(product)"
-                                           onclick="return confirm('Do you want to delete this?')"
-                                           class="btn btn-danger btn-sm">Delete</a>
+                                        <router-link :to="{name:'edit-product',params:{slug:product.slug}}" class="btn btn-primary btn-sm">Edit </router-link>
+                                        <a @click.prevent="deleteProduct(product)" class="btn btn-danger btn-sm">Delete</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -72,17 +68,19 @@ export default {
             })
         },
         deleteProduct(product) {
-            axios.delete(`/api/product/${product.id}`).then(() => {
-                this.$toast.success({
-                    title: 'Success',
-                    message: 'Product deleted successfully.'
-                })
-            });
+            if(confirm("Are You Sure to delete this")){
+                axios.delete(`/api/product/${product.id}`).then(() => {
+                    this.$toast.success({
+                        title: 'Success',
+                        message: 'Product deleted successfully.'
+                    })
+                });
 
-            let index = this.products.indexOf(product);
-            this.products.splice(index,1);
-        },
-
+                let index = this.products.indexOf(product);
+                this.products.splice(index,1);
+            }
+            // event.preventDefault();
+        }, 
     },
     mounted() {
         this.loadProducts();

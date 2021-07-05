@@ -2498,10 +2498,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2519,14 +2515,17 @@ __webpack_require__.r(__webpack_exports__);
     deleteProduct: function deleteProduct(product) {
       var _this2 = this;
 
-      axios["delete"]("/api/product/".concat(product.id)).then(function () {
-        _this2.$toast.success({
-          title: 'Success',
-          message: 'Product deleted successfully.'
+      if (confirm("Are You Sure to delete this")) {
+        axios["delete"]("/api/product/".concat(product.id)).then(function () {
+          _this2.$toast.success({
+            title: 'Success',
+            message: 'Product deleted successfully.'
+          });
         });
-      });
-      var index = this.products.indexOf(product);
-      this.products.splice(index, 1);
+        var index = this.products.indexOf(product);
+        this.products.splice(index, 1);
+      } // event.preventDefault();
+
     }
   },
   mounted: function mounted() {
@@ -40388,21 +40387,13 @@ var render = function() {
                                   }
                                 }
                               },
-                              [
-                                _vm._v(
-                                  "Edit\n                                    "
-                                )
-                              ]
+                              [_vm._v("Edit ")]
                             ),
                             _vm._v(" "),
                             _c(
                               "a",
                               {
                                 staticClass: "btn btn-danger btn-sm",
-                                attrs: {
-                                  onclick:
-                                    "return confirm('Do you want to delete this?')"
-                                },
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()

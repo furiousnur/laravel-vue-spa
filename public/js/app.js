@@ -40396,7 +40396,6 @@ var render = function() {
                                 staticClass: "btn btn-danger btn-sm",
                                 on: {
                                   click: function($event) {
-                                    $event.preventDefault()
                                     return _vm.deleteProduct(product)
                                   }
                                 }

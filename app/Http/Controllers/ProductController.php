@@ -128,8 +128,10 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         if ($product){
-            if ($product->image && file_exists($product->image)){
-                unlink($product->image);
+            $img = $product->image;
+            $imgPath = public_path($img);
+            if ($img && file_exists($imgPath)){
+                unlink($imgPath);
             }
             $product->delete();
         }else{

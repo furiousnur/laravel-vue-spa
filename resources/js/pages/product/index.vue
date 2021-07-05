@@ -35,7 +35,7 @@
                                     <td width="5%">{{ product.status }}</td>
                                     <td width="15%">
                                         <router-link :to="{name:'edit-product',params:{slug:product.slug}}" class="btn btn-primary btn-sm">Edit </router-link>
-                                        <a @click.prevent="deleteProduct(product)" class="btn btn-danger btn-sm">Delete</a>
+                                        <a @click="deleteProduct(product)" class="btn btn-danger btn-sm">Delete</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -80,7 +80,7 @@ export default {
                 this.products.splice(index,1);
             }
             // event.preventDefault();
-        }, 
+        },
     },
     mounted() {
         this.loadProducts();

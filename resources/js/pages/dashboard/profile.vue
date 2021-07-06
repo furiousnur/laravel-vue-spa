@@ -12,34 +12,41 @@
                 <div class="col-8">
                     <div class="card">
                         <div class="card-header">
-                            <span class="font-weight-bold">{{profileForm.name}}'s Profile</span>
+                            {{auth.name}}'s Profile
                         </div>
                         <div class="card-body">
-                            <form action="" method="post">
+                            <form action="" method="post" @submit.prevent="updateUserProfile()">
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label class="font-weight-bold" for="name">Your Name</label>
-                                            <input id="name" v-model="profileForm.name" class="form-control" name="name" placeholder="Your Name" type="text">
+                                            <label for="name">Your Name</label>
+                                            <input id="name" v-model="profileForm.name" class="form-control" name="name" :class="{'is-invalid':profileForm.errors.has('name')}"
+                                                   placeholder="Your Name" type="text">
+                                            <div v-if="profileForm.errors.has('name')" v-html="profileForm.errors.get('name')"/>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label class="font-weight-bold" for="email">Email</label>
-                                            <input id="email" v-model="profileForm.email" class="form-control" name="email" placeholder="Email" type="email">
+                                            <label for="email">Email</label>
+                                            <input id="email" v-model="profileForm.email" class="form-control" name="email" :class="{'is-invalid':profileForm.errors.has('email')}"
+                                                   placeholder="Email" type="email">
+                                            <div v-if="profileForm.errors.has('email')" v-html="profileForm.errors.get('email')"/>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label class="font-weight-bold" for="password">Password</label>
-                                            <input id="password" v-model="profileForm.password"
+                                            <label for="password">Password</label>
+                                            <input id="password" v-model="profileForm.password" :class="{'is-invalid':profileForm.errors.has('password')}"
                                                    class="form-control" name="password" placeholder="Password" type="password">
+                                            <div v-if="profileForm.errors.has('password')" v-html="profileForm.errors.get('password')"/>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label class="font-weight-bold" for="confirmPassword">Confirm Password</label>
-                                            <input id="confirmPassword" v-model="profileForm.password" class="form-control" name="password" placeholder="Password" type="password">
+                                            <label for="confirmPassword">Confirm Password</label>
+                                            <input id="confirmPassword" v-model="profileForm.password_confirmation" :class="{'is-invalid':profileForm.errors.has('password_confirmation')}"
+                                                   class="form-control" name="password" placeholder="Confirm Password" type="password">
+                                            <div v-if="profileForm.errors.has('password_confirmation')" v-html="profileForm.errors.get('password_confirmation')"/>
                                         </div>
                                     </div>
                                 </div>
@@ -55,6 +62,7 @@
     </div>
 </template>
 
+
 <script>
 import Form from "vform";
 export default {
@@ -64,7 +72,7 @@ export default {
                 name: '',
                 email: '',
                 password: '',
-                confirm_password: '',
+                password_confirmation: '',
             }),
         }
     },
@@ -73,10 +81,26 @@ export default {
             let user = this.$store.getters.getUser;
             this.profileForm.name = user.name;
             this.profileForm.email = user.email;
+        },
+        updateUserProfile(){
+            this.profileForm.post('/api/user').then(response => {
+                //user update on vuex store
+                this.$store.commit('SET_USER',response.data);
+
+                this.$toast.success({
+                    title:'Success',
+                    message:'profile updated successfully.'
+                })
+            })
         }
     },
     created(){
         this.user();
+    },
+    computed:{
+        auth(){
+            return this.$store.getters.getUser;
+        }
     }
 }
 </script>

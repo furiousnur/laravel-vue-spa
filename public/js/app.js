@@ -1938,8 +1938,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       loginForm: new vform__WEBPACK_IMPORTED_MODULE_0__.default({
-        email: '',
-        password: ''
+        email: 'nuralam@gmail.com',
+        password: '12345678'
       })
     };
   },
@@ -1949,17 +1949,15 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/sanctum/csrf-cookie').then(function (response) {
         _this.loginForm.post('/login', {}).then(function (response) {
-          console.log(response);
+          _this.$router.push({
+            name: 'dashboard'
+          });
 
           _this.getUserData();
 
           _this.$toast.success({
             title: 'Success',
             message: 'Login successfully.'
-          });
-
-          _this.$router.push({
-            name: 'dashboard'
           });
         });
       });
@@ -2248,6 +2246,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -40394,31 +40393,45 @@ var render = function() {
     _c("div", { staticClass: "py-3" }, [
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-4" }, [
-          _c("div", { staticClass: "list-group" }, [
-            _c(
-              "a",
-              {
-                staticClass: "list-group-item list-group-item-action",
-                attrs: { href: "#" }
-              },
-              [_vm._v("Demo Link")]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "list-group-item list-group-item-action",
-                attrs: { href: "#" },
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.logout.apply(null, arguments)
+          _c(
+            "div",
+            { staticClass: "list-group" },
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "list-group-item list-group-item-action",
+                  attrs: { to: { name: "dashboard" }, href: "#" }
+                },
+                [_vm._v("Dashboard")]
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                {
+                  staticClass: "list-group-item list-group-item-action",
+                  attrs: { to: { name: "profile" }, href: "#" }
+                },
+                [_vm._v("Profile")]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "list-group-item list-group-item-action",
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.logout.apply(null, arguments)
+                    }
                   }
-                }
-              },
-              [_vm._v("Logout")]
-            )
-          ])
+                },
+                [_vm._v("Logout")]
+              )
+            ],
+            1
+          )
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-8" }, [

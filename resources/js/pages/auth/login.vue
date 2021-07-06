@@ -40,8 +40,8 @@ export default {
     data() {
         return {
             loginForm: new Form({
-                email: '',
-                password: '',
+                email: 'nuralam@gmail.com',
+                password: '12345678',
             }),
         }
     },
@@ -51,13 +51,12 @@ export default {
                 this.loginForm.post('/login',{
 
                 }).then(response => {
-                    console.log(response)
+                    this.$router.push({name:'dashboard'});
                     this.getUserData();
                     this.$toast.success({
                         title:'Success',
                         message:'Login successfully.'
                     })
-                    this.$router.push({name:'dashboard'});
                 });
             });
         },

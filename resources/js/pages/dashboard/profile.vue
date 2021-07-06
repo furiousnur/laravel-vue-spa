@@ -77,6 +77,17 @@ export default {
         }
     },
     methods:{
+        logout(){
+            axios.post('/logout').then(response => {
+                this.$toast.success({
+                    title:'Success',
+                    message:'Logout successfully.'
+                })
+                localStorage.removeItem('auth');
+                this.$store.commit('SET_AUTHENTICATED',false)
+                this.$router.push({name:'login'});
+            })
+        },
         user(){
             let user = this.$store.getters.getUser;
             this.profileForm.name = user.name;

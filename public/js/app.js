@@ -2395,19 +2395,37 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    logout: function logout() {
+      var _this = this;
+
+      axios.post('/logout').then(function (response) {
+        _this.$toast.success({
+          title: 'Success',
+          message: 'Logout successfully.'
+        });
+
+        localStorage.removeItem('auth');
+
+        _this.$store.commit('SET_AUTHENTICATED', false);
+
+        _this.$router.push({
+          name: 'login'
+        });
+      });
+    },
     user: function user() {
       var user = this.$store.getters.getUser;
       this.profileForm.name = user.name;
       this.profileForm.email = user.email;
     },
     updateUserProfile: function updateUserProfile() {
-      var _this = this;
+      var _this2 = this;
 
       this.profileForm.post('/api/user').then(function (response) {
         //user update on vuex store
-        _this.$store.commit('SET_USER', response.data);
+        _this2.$store.commit('SET_USER', response.data);
 
-        _this.$toast.success({
+        _this2.$toast.success({
           title: 'Success',
           message: 'profile updated successfully.'
         });

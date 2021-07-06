@@ -33,7 +33,7 @@
     export default {
         methods:{
             logout(){
-                axios.post('/logout').then(resposne => {
+                axios.post('/logout').then(response => {
                     this.$router.push({name:'login'});
                     this.$toast.success({
                         title:'Success',

@@ -1881,7 +1881,7 @@ __webpack_require__.r(__webpack_exports__);
     logout: function logout() {
       var _this = this;
 
-      axios.post('/logout').then(function (resposne) {
+      axios.post('/logout').then(function (response) {
         _this.$router.push({
           name: 'login'
         });
@@ -1944,8 +1944,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -1962,6 +1960,8 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/sanctum/csrf-cookie').then(function (response) {
         _this.loginForm.post('/login', {}).then(function (response) {
+          console.log(response);
+
           _this.getUserData();
 
           _this.$toast.success({

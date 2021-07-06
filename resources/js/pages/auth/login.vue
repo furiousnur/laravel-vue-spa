@@ -18,10 +18,8 @@
                                 <div class="form-group">
                                     <label for="password">Password</label>
                                     <input id="password" v-model="loginForm.password" :class="{'is-invalid':loginForm.errors.has('password')}"
-                                           class="form-control" name="password" placeholder="Password"
-                                           type="password">
-                                    <div v-if="loginForm.errors.has('password')"
-                                         v-html="loginForm.errors.get('password')"/>
+                                           class="form-control" name="password" placeholder="Password" type="password">
+                                    <div v-if="loginForm.errors.has('password')" v-html="loginForm.errors.get('password')"/>
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-success px-4" type="submit">Login</button>
@@ -50,17 +48,17 @@ export default {
     methods: {
         login() {
             axios.get('/sanctum/csrf-cookie').then(response => {
-                this.loginForm.post('/login', {
-                }).then(response => {
-                    this.getUserData();
+                this.loginForm.post('/login',{
 
+                }).then(response => {
+                    console.log(response)
+                    this.getUserData();
                     this.$toast.success({
                         title:'Success',
                         message:'Login successfully.'
                     })
-
                     this.$router.push({name:'dashboard'});
-                })
+                });
             });
         },
         getUserData() {

@@ -28,11 +28,13 @@ export default {
     methods:{
         logout(){
             axios.post('/logout').then(response => {
-                this.$router.push({name:'login'});
                 this.$toast.success({
                     title:'Success',
                     message:'Logout successfully.'
                 })
+                localStorage.removeItem('auth');
+                this.$store.commit('SET_AUTHENTICATED',false)
+                this.$router.push({name:'login'});
             })
         }
     },

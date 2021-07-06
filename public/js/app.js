@@ -2279,13 +2279,17 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.post('/logout').then(function (response) {
-        _this.$router.push({
-          name: 'login'
-        });
-
         _this.$toast.success({
           title: 'Success',
           message: 'Logout successfully.'
+        });
+
+        localStorage.removeItem('auth');
+
+        _this.$store.commit('SET_AUTHENTICATED', false);
+
+        _this.$router.push({
+          name: 'login'
         });
       });
     }

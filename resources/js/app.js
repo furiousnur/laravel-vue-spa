@@ -20,8 +20,22 @@ Vue.use(CxltToastr, toastrConfigs)
 // Vue.component(AlertError.name, AlertError)
 Vue.component('app-header', require('./components/Header.vue').default);
 
-const app = new Vue({
-    el: '#app',
-    router: routes,
-    store,
-});
+
+// check authentication
+let auth = localStorage.getItem("auth");
+
+if(auth){
+    store.dispatch('authUser').then(() => {
+        const app = new Vue({
+            el: '#app',
+            router: routes,
+            store,
+        });
+    });
+}else {
+    const app = new Vue({
+        el: '#app',
+        router: routes,
+        store,
+    });
+}

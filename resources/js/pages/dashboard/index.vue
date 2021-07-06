@@ -1,12 +1,22 @@
 <template>
     <div class="container">
         <div class="py-3">
-            <div class="card">
-                <div class="card-header">
-                    Dashboard
+            <div class="row">
+                <div class="col-4">
+                    <div class="list-group">
+                        <a class="list-group-item list-group-item-action" href="#">Demo Link</a>
+                        <a class="list-group-item list-group-item-action" href="#" @click.prevent="logout">Logout</a>
+                    </div>
                 </div>
-                <div class="card-body">
-                     Welcome, {{user.name}}
+                <div class="col-8">
+                    <div class="card">
+                        <div class="card-header">
+                            Dashboard
+                        </div>
+                        <div class="card-body">
+                            Welcome, {{user.name}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -15,6 +25,17 @@
 
 <script>
 export default {
+    methods:{
+        logout(){
+            axios.post('/logout').then(response => {
+                this.$router.push({name:'login'});
+                this.$toast.success({
+                    title:'Success',
+                    message:'Logout successfully.'
+                })
+            })
+        }
+    },
      computed:{
          message(){
              return this.$store.getters.getMessage;

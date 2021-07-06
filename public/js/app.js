@@ -1877,20 +1877,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  methods: {
-    logout: function logout() {
-      var _this = this;
-
-      axios.post('/logout').then(function (response) {
-        _this.$router.push({
-          name: 'login'
-        });
-
-        _this.$toast.success({
-          title: 'Success',
-          message: 'Logout successfully.'
-        });
-      });
+  computed: {
+    auth: function auth() {
+      return this.$store.getters.getAuthenticated;
     }
   }
 });
@@ -1982,6 +1971,10 @@ __webpack_require__.r(__webpack_exports__);
         var user = response.data;
 
         _this2.$store.commit('SET_USER', user);
+
+        _this2.$store.commit('SET_AUTHENTICATED', true);
+
+        localStorage.setItem("auth", true);
       });
     }
   },
@@ -2270,7 +2263,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  methods: {
+    logout: function logout() {
+      var _this = this;
+
+      axios.post('/logout').then(function (response) {
+        _this.$router.push({
+          name: 'login'
+        });
+
+        _this.$toast.success({
+          title: 'Success',
+          message: 'Logout successfully.'
+        });
+      });
+    }
+  },
   computed: {
     message: function message() {
       return this.$store.getters.getMessage;
@@ -2721,12 +2740,25 @@ var toastrConfigs = {
 vue__WEBPACK_IMPORTED_MODULE_4__.default.use((cxlt_vue2_toastr__WEBPACK_IMPORTED_MODULE_2___default()), toastrConfigs); // Vue.component(HasError.name, HasError)
 // Vue.component(AlertError.name, AlertError)
 
-vue__WEBPACK_IMPORTED_MODULE_4__.default.component('app-header', __webpack_require__(/*! ./components/Header.vue */ "./resources/js/components/Header.vue").default);
-var app = new vue__WEBPACK_IMPORTED_MODULE_4__.default({
-  el: '#app',
-  router: _router_index__WEBPACK_IMPORTED_MODULE_0__.default,
-  store: _pages_store_index__WEBPACK_IMPORTED_MODULE_1__.default
-});
+vue__WEBPACK_IMPORTED_MODULE_4__.default.component('app-header', __webpack_require__(/*! ./components/Header.vue */ "./resources/js/components/Header.vue").default); // check authentication
+
+var auth = localStorage.getItem("auth");
+
+if (auth) {
+  _pages_store_index__WEBPACK_IMPORTED_MODULE_1__.default.dispatch('authUser').then(function () {
+    var app = new vue__WEBPACK_IMPORTED_MODULE_4__.default({
+      el: '#app',
+      router: _router_index__WEBPACK_IMPORTED_MODULE_0__.default,
+      store: _pages_store_index__WEBPACK_IMPORTED_MODULE_1__.default
+    });
+  });
+} else {
+  var app = new vue__WEBPACK_IMPORTED_MODULE_4__.default({
+    el: '#app',
+    router: _router_index__WEBPACK_IMPORTED_MODULE_0__.default,
+    store: _pages_store_index__WEBPACK_IMPORTED_MODULE_1__.default
+  });
+}
 
 /***/ }),
 
@@ -2762,15 +2794,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _router_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../router/index */ "./resources/js/router/index.js");
 
 
-vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.default);
-var store = new vuex__WEBPACK_IMPORTED_MODULE_1__.default.Store({
+
+
+vue__WEBPACK_IMPORTED_MODULE_2__.default.use(vuex__WEBPACK_IMPORTED_MODULE_3__.default);
+var store = new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
   state: {
     message: 'Welcome, Mango People!',
-    user: {}
+    user: {},
+    authenticated: false
   },
   getters: {
     getMessage: function getMessage(state) {
@@ -2778,11 +2816,48 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__.default.Store({
     },
     getUser: function getUser(state) {
       return state.user;
+    },
+    getAuthenticated: function getAuthenticated(state) {
+      return state.authenticated;
     }
   },
   mutations: {
     SET_USER: function SET_USER(state, data) {
       state.user = data;
+    },
+    SET_AUTHENTICATED: function SET_AUTHENTICATED(state, data) {
+      state.authenticated = data;
+    }
+  },
+  actions: {
+    authUser: function authUser(_ref) {
+      var commit = _ref.commit,
+          dispatch = _ref.dispatch;
+      return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/user').then(function (response) {
+        commit('SET_AUTHENTICATED', true);
+        commit('SET_USER', response.data);
+        localStorage.setItem("auth", true);
+
+        if (_router_index__WEBPACK_IMPORTED_MODULE_1__.default.currentRoute.name !== null) {
+          _router_index__WEBPACK_IMPORTED_MODULE_1__.default.push({
+            name: 'dashboard'
+          });
+        }
+
+        ;
+      })["catch"](function () {
+        commit('SET_AUTHENTICATED', false);
+        commit('SET_USER', null);
+        localStorage.removeItem("auth");
+
+        if (_router_index__WEBPACK_IMPORTED_MODULE_1__.default.currentRoute.name !== 'login') {
+          _router_index__WEBPACK_IMPORTED_MODULE_1__.default.push({
+            name: 'login'
+          });
+        }
+
+        ;
+      });
     }
   }
 });
@@ -39609,38 +39684,41 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _c(
-                    "li",
-                    { staticClass: "nav-item" },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "nav-link",
-                          attrs: { to: { name: "login" } }
-                        },
-                        [_vm._v("Login")]
+                  _vm.auth
+                    ? _c(
+                        "li",
+                        { staticClass: "nav-item" },
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "nav-link",
+                              attrs: { to: { name: "dashboard" } }
+                            },
+                            [_vm._v("Dashboard")]
+                          )
+                        ],
+                        1
                       )
-                    ],
-                    1
-                  ),
+                    : _vm._e(),
                   _vm._v(" "),
-                  _c("li", { staticClass: "nav-item" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "nav-link",
-                        attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.logout.apply(null, arguments)
-                          }
-                        }
-                      },
-                      [_vm._v("Logout")]
-                    )
-                  ])
+                  !_vm.auth
+                    ? _c(
+                        "li",
+                        { staticClass: "nav-item" },
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "nav-link",
+                              attrs: { to: { name: "login" } }
+                            },
+                            [_vm._v("Login")]
+                          )
+                        ],
+                        1
+                      )
+                    : _vm._e()
                 ])
               ]
             )
@@ -40270,17 +40348,51 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "py-3" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header" }, [
-          _vm._v("\n                Dashboard\n            ")
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-4" }, [
+          _c("div", { staticClass: "list-group" }, [
+            _c(
+              "a",
+              {
+                staticClass: "list-group-item list-group-item-action",
+                attrs: { href: "#" }
+              },
+              [_vm._v("Demo Link")]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "list-group-item list-group-item-action",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.logout.apply(null, arguments)
+                  }
+                }
+              },
+              [_vm._v("Logout")]
+            )
+          ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _vm._v(
-            "\n                 Welcome, " +
-              _vm._s(_vm.user.name) +
-              "\n            "
-          )
+        _c("div", { staticClass: "col-8" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-header" }, [
+              _vm._v(
+                "\n                        Dashboard\n                    "
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _vm._v(
+                "\n                        Welcome, " +
+                  _vm._s(_vm.user.name) +
+                  "\n                    "
+              )
+            ])
+          ])
         ])
       ])
     ])

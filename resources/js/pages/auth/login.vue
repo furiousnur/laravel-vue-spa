@@ -46,21 +46,18 @@ export default {
         }
     },
     methods: {
-        login() {
-            axios.get('/sanctum/csrf-cookie').then(response => {
-                this.loginForm.post('/login',{
-                }).then(response => {
-                    this.getUserData();
-                    this.$toast.success({
-                        title:'Success',
-                        message:'Login successfully.'
-                    })
-                    this.$router.push({name:'dashboard'});
-                });
-            });
+        async login() {
+            await axios.get('/sanctum/csrf-cookie');
+            await this.loginForm.post('/login');
+            await this.getUserData();
+            this.$toast.success({
+                title:'Success',
+                message:'Login successfully.'
+            })
+            this.$router.push({name:'dashboard'});
         },
-        getUserData() {
-            axios.get('/api/user').then(response => {
+        async getUserData() {
+            await axios.get('/api/user').then(response => {
                 let user = response.data;
                 this.$store.commit('SET_USER', user);
                 this.$store.commit('SET_AUTHENTICATED', true);

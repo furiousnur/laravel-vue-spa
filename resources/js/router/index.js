@@ -15,6 +15,7 @@ import EditProduct from '../pages/product/edit'
 
 //Authentication Route List
 import Login from '../pages/auth/login'
+import Signup from '../pages/auth/register'
 
 //Dashboard Route List
 import Dashboard from '../pages/dashboard/index'
@@ -56,6 +57,11 @@ const routes = new VueRouter({
             path: '/auth/login',
             component: Login,
             name: 'login',
+            meta:{ requiresVisitor: true }
+        }, {
+            path: '/auth/signup',
+            component: Signup,
+            name: 'signup',
             meta:{ requiresVisitor: true }
         }, {
             path: '/dashboard',

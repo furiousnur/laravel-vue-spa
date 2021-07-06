@@ -18,8 +18,6 @@ var toastrConfigs = {
 }
 Vue.use(CxltToastr, toastrConfigs)
 
-// Vue.component(HasError.name, HasError)
-// Vue.component(AlertError.name, AlertError)
 Vue.component('app-header', require('./components/Header.vue').default);
 
 //Vue Router Navigation Guard
@@ -43,8 +41,7 @@ routes.beforeEach((to, from, next) => {
         // if not, redirect to login page.
         if (isLoggedIn()) {
             next({
-                // name: 'dashboard',
-                path: { name: 'dashboard' },
+                name: 'dashboard',
             })
         } else {
             next()

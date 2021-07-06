@@ -18,6 +18,7 @@ import Login from '../pages/auth/login'
 
 //Dashboard Route List
 import Dashboard from '../pages/dashboard/index'
+import Profile from '../pages/dashboard/profile'
 
 const routes = new VueRouter({
     mode: 'history',
@@ -55,16 +56,17 @@ const routes = new VueRouter({
             path: '/auth/login',
             component: Login,
             name: 'login',
-            meta:{
-                requiresVisitor: true,
-            }
+            meta:{ requiresVisitor: true }
         }, {
             path: '/dashboard',
             component: Dashboard,
             name: 'dashboard',
-            meta:{
-                requiresAuth: true,
-            }
+            meta: { requiresAuth: true }
+        }, {
+            path: '/dashboard/profile',
+            component: Profile,
+            name: 'profile',
+            meta: { requiresAuth: true }
         }
     ]
 });

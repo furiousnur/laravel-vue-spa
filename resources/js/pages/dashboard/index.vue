@@ -4,8 +4,8 @@
             <div class="row">
                 <div class="col-4">
                     <div class="list-group">
-                        <router-link :to="{name:'dashboard'}" class="list-group-item list-group-item-action" href="#">Dashboard</router-link>
-                        <router-link :to="{name:'profile'}" class="list-group-item list-group-item-action" href="#">Profile</router-link>
+                        <router-link :to="{name:'dashboard'}" class="list-group-item list-group-item-action">Dashboard</router-link>
+                        <router-link :to="{name:'profile'}" class="list-group-item list-group-item-action">Profile</router-link>
                         <a class="list-group-item list-group-item-action" href="#" @click.prevent="logout">Logout</a>
                     </div>
                 </div>

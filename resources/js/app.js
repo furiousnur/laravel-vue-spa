@@ -1,3 +1,5 @@
+import router from "./router";
+
 require('./bootstrap');
 import Vue from 'vue'
 import routes from './router/index'
@@ -41,7 +43,8 @@ routes.beforeEach((to, from, next) => {
         // if not, redirect to login page.
         if (isLoggedIn()) {
             next({
-                name: 'dashboard',
+                // name: 'dashboard',
+                path: { name: 'dashboard' },
             })
         } else {
             next()

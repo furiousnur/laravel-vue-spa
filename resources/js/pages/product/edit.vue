@@ -19,11 +19,18 @@
                                         <div v-if="productForm.errors.has('title')" v-html="productForm.errors.get('title')"/>
                                     </div>
                                     <div class="form-group">
+                                        <label for="productCategory">Select Product Category</label>
+                                        <select name="category_id" id="productCategory" class="form-control" v-model="productForm.category_id"
+                                                :class="{'is-invalid':productForm.errors.has('category_id')}">
+                                            <option value="" selected disabled hidden>Select Category</option>
+                                            <option :value="category.id" v-for="category in categories" :key="category.id">{{category.name}}</option>
+                                        </select>
+                                        <div v-if="productForm.errors.has('category_id')" v-html="productForm.errors.get('category_id')"/>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="productPrice">Product Price</label>
-                                        <input v-model="productForm.price" type="text" name="price" id="productPrice"
-                                               placeholder="Product Price"
-                                               :class="{'is-invalid':productForm.errors.has('price')}"
-                                               class="form-control">
+                                        <input v-model="productForm.price" type="text" name="price" id="productPrice" placeholder="Product Price"
+                                               :class="{'is-invalid':productForm.errors.has('price')}" class="form-control">
                                         <div v-if="productForm.errors.has('price')"
                                              v-html="productForm.errors.get('price')"/>
                                     </div>
@@ -75,9 +82,15 @@ export default {
                 _method: 'put',
                 id: ''
             }),
+            categories:[]
         }
     },
     methods: {
+        loadCategories() {
+            axios.get('/api/category').then(response => {
+                this.categories = response.data;
+            })
+        },
         loadProductData(){
             let slug = this.$route.params.slug;
             axios.get(`/api/product/${slug}/edit`).then(response => {
@@ -87,6 +100,7 @@ export default {
                 this.productForm.price = product.price;
                 this.productForm.image = product.image;
                 this.productForm.description = product.description;
+                this.productForm.category_id = product.category_id;
             })
         },
         saveProduct() {
@@ -120,6 +134,7 @@ export default {
     },
     mounted() {
         this.loadProductData();
+        this.loadCategories();
     }
 }
 </script>

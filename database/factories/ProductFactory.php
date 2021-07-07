@@ -27,6 +27,7 @@ class ProductFactory extends Factory
         return [
             'title' => $title,
             'slug' => $slug,
+            'category_id' => 3,
             'price' => rand(100,300),
             'image' => 'https://placekitten.com/640/360',
             'description' => $this->faker->text

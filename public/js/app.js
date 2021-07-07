@@ -2846,6 +2846,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2855,13 +2864,22 @@ __webpack_require__.r(__webpack_exports__);
         title: '',
         image: '',
         price: '',
-        description: ''
-      })
+        description: '',
+        category_id: ''
+      }),
+      categories: []
     };
   },
   methods: {
-    createProduct: function createProduct() {
+    loadCategories: function loadCategories() {
       var _this = this;
+
+      axios.get('/api/category').then(function (response) {
+        _this.categories = response.data;
+      });
+    },
+    createProduct: function createProduct() {
+      var _this2 = this;
 
       this.productForm.post('/api/product', {
         transformRequest: [function (data, headers) {
@@ -2873,12 +2891,13 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (_ref) {
         var data = _ref.data;
-        _this.productForm.title = '';
-        _this.productForm.price = '';
-        _this.productForm.image = '';
-        _this.productForm.description = '';
+        _this2.productForm.title = '';
+        _this2.productForm.price = '';
+        _this2.productForm.image = '';
+        _this2.productForm.description = '';
+        _this2.productForm.category_id = '';
 
-        _this.$toast.success({
+        _this2.$toast.success({
           title: 'Success',
           message: 'Product created successfully.'
         });
@@ -2890,6 +2909,9 @@ __webpack_require__.r(__webpack_exports__);
 
       this.productForm.image = file;
     }
+  },
+  mounted: function mounted() {
+    this.loadCategories();
   }
 });
 
@@ -2971,6 +2993,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2983,25 +3012,34 @@ __webpack_require__.r(__webpack_exports__);
         description: '',
         _method: 'put',
         id: ''
-      })
+      }),
+      categories: []
     };
   },
   methods: {
-    loadProductData: function loadProductData() {
+    loadCategories: function loadCategories() {
       var _this = this;
+
+      axios.get('/api/category').then(function (response) {
+        _this.categories = response.data;
+      });
+    },
+    loadProductData: function loadProductData() {
+      var _this2 = this;
 
       var slug = this.$route.params.slug;
       axios.get("/api/product/".concat(slug, "/edit")).then(function (response) {
         var product = response.data;
-        _this.id = product.id;
-        _this.productForm.title = product.title;
-        _this.productForm.price = product.price;
-        _this.productForm.image = product.image;
-        _this.productForm.description = product.description;
+        _this2.id = product.id;
+        _this2.productForm.title = product.title;
+        _this2.productForm.price = product.price;
+        _this2.productForm.image = product.image;
+        _this2.productForm.description = product.description;
+        _this2.productForm.category_id = product.category_id;
       });
     },
     saveProduct: function saveProduct() {
-      var _this2 = this;
+      var _this3 = this;
 
       var id = this.id;
       this.productForm.post('/api/product/' + id, {
@@ -3014,12 +3052,12 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (_ref) {
         var data = _ref.data;
-        _this2.title = data.title;
-        _this2.price = data.price;
-        _this2.image = data.image;
-        _this2.description = data.description;
+        _this3.title = data.title;
+        _this3.price = data.price;
+        _this3.image = data.image;
+        _this3.description = data.description;
 
-        _this2.$toast.success({
+        _this3.$toast.success({
           title: 'Success',
           message: 'Product updated successfully.'
         });
@@ -3034,6 +3072,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.loadProductData();
+    this.loadCategories();
   }
 });
 
@@ -42669,6 +42708,88 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "productCategory" } }, [
+                        _vm._v("Select Product Category")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.productForm.category_id,
+                              expression: "productForm.category_id"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.productForm.errors.has(
+                              "category_id"
+                            )
+                          },
+                          attrs: { name: "category_id", id: "productCategory" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.productForm,
+                                "category_id",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "option",
+                            {
+                              attrs: {
+                                value: "",
+                                selected: "",
+                                disabled: "",
+                                hidden: ""
+                              }
+                            },
+                            [_vm._v("Select Category")]
+                          ),
+                          _vm._v(" "),
+                          _vm._l(_vm.categories, function(category) {
+                            return _c(
+                              "option",
+                              {
+                                key: category.id,
+                                domProps: { value: category.id }
+                              },
+                              [_vm._v(_vm._s(category.name))]
+                            )
+                          })
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _vm.productForm.errors.has("category_id")
+                        ? _c("div", {
+                            domProps: {
+                              innerHTML: _vm._s(
+                                _vm.productForm.errors.get("category_id")
+                              )
+                            }
+                          })
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
                       _c("label", { attrs: { for: "productPrice" } }, [
                         _vm._v("Product Price")
                       ]),
@@ -42921,6 +43042,88 @@ var render = function() {
                             domProps: {
                               innerHTML: _vm._s(
                                 _vm.productForm.errors.get("title")
+                              )
+                            }
+                          })
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "productCategory" } }, [
+                        _vm._v("Select Product Category")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.productForm.category_id,
+                              expression: "productForm.category_id"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.productForm.errors.has(
+                              "category_id"
+                            )
+                          },
+                          attrs: { name: "category_id", id: "productCategory" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.productForm,
+                                "category_id",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "option",
+                            {
+                              attrs: {
+                                value: "",
+                                selected: "",
+                                disabled: "",
+                                hidden: ""
+                              }
+                            },
+                            [_vm._v("Select Category")]
+                          ),
+                          _vm._v(" "),
+                          _vm._l(_vm.categories, function(category) {
+                            return _c(
+                              "option",
+                              {
+                                key: category.id,
+                                domProps: { value: category.id }
+                              },
+                              [_vm._v(_vm._s(category.name))]
+                            )
+                          })
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _vm.productForm.errors.has("category_id")
+                        ? _c("div", {
+                            domProps: {
+                              innerHTML: _vm._s(
+                                _vm.productForm.errors.get("category_id")
                               )
                             }
                           })

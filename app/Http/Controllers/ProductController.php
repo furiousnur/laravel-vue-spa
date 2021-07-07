@@ -42,6 +42,7 @@ class ProductController extends Controller
            'price' => 'required|integer',
            'image' => 'nullable|max:2048|image',
            'description' => 'required',
+           'category_id' => 'required',
         ]);
 
         $product = Product::create([
@@ -50,6 +51,7 @@ class ProductController extends Controller
            'price' => $request->price,
            'image' => 'image',
            'description' => $request->description,
+           'category_id' => $request->category_id,
         ]);
 
         if($request->image){
@@ -104,6 +106,7 @@ class ProductController extends Controller
         $this->validate($request,[
             'title' => 'required|unique:products,title,'.$product->id,
             'price' => 'required|integer',
+            'category_id' => 'required',
 //            'image' => 'sometimes|nullable|image|max:2048',
             'description' => 'required',
         ]);
@@ -113,6 +116,7 @@ class ProductController extends Controller
             'slug' => Str::slug($request->title),
             'price' => $request->price,
             'description' => $request->description,
+            'category_id' => $request->category_id,
         ]);
 
         return response()->json('Success', 200);

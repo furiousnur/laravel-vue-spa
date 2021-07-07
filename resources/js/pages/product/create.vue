@@ -22,6 +22,15 @@
                                              v-html="productForm.errors.get('title')"/>
                                     </div>
                                     <div class="form-group">
+                                        <label for="productCategory">Select Product Category</label>
+                                        <select name="category_id" id="productCategory" class="form-control" v-model="productForm.category_id"
+                                                :class="{'is-invalid':productForm.errors.has('category_id')}">
+                                            <option value="" selected disabled hidden>Select Category</option>
+                                            <option :value="category.id" v-for="category in categories" :key="category.id">{{category.name}}</option>
+                                        </select>
+                                        <div v-if="productForm.errors.has('category_id')" v-html="productForm.errors.get('category_id')"/>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="productPrice">Product Price</label>
                                         <input v-model="productForm.price" type="text" name="price" id="productPrice"
                                                placeholder="Product Price"
@@ -69,10 +78,17 @@ export default {
                 image: '',
                 price: '',
                 description: '',
+                category_id:'',
             }),
+            categories:[]
         }
     },
     methods: {
+        loadCategories() {
+            axios.get('/api/category').then(response => {
+                this.categories = response.data;
+            })
+        },
         createProduct() {
             this.productForm.post('/api/product',{
                 transformRequest: [function (data, headers) {
@@ -87,6 +103,7 @@ export default {
                 this.productForm.price = '';
                 this.productForm.image = '';
                 this.productForm.description = '';
+                this.productForm.category_id = '';
                 this.$toast.success({
                     title: 'Success',
                     message: 'Product created successfully.'
@@ -99,6 +116,9 @@ export default {
             //image upload npm command = "npm install object-to-formdata"
             this.productForm.image = file
         },
+    },
+    mounted() {
+        this.loadCategories();
     }
 }
 </script>

@@ -49,6 +49,7 @@ export default {
         async login() {
             await axios.get('/sanctum/csrf-cookie');
             await this.loginForm.post('/login');
+            console.log('success')
             await this.getUserData();
             this.$toast.success({
                 title:'Success',

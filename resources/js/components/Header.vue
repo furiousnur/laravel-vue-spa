@@ -7,7 +7,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav ml-auto mb-2 mb-lg-0" v-if="auth">
                         <li class="nav-item">
                             <router-link class="nav-link active" aria-current="page" :to="{name:'home'}">Home</router-link>
                         </li>
@@ -17,13 +17,15 @@
                         <li class="nav-item">
                             <router-link class="nav-link" :to="{name:'product-list'}">Product List</router-link>
                         </li>
-                        <li class="nav-item" v-if="auth">
+                        <li class="nav-item">
                             <router-link class="nav-link" :to="{name:'dashboard'}">Dashboard</router-link>
                         </li>
-                        <li class="nav-item" v-if="!auth">
+                    </ul>
+                    <ul class="navbar-nav ml-auto mb-2 mb-lg-0" v-else>
+                        <li class="nav-item">
                             <router-link class="nav-link" :to="{name:'login'}">Login</router-link>
                         </li>
-                        <li class="nav-item" v-if="!auth">
+                        <li class="nav-item">
                             <router-link class="nav-link" :to="{name:'signup'}">Signup</router-link>
                         </li>
                     </ul>

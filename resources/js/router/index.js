@@ -33,36 +33,32 @@ const routes = new VueRouter({
             path: '/category',
             component: CategoryList,
             name: 'category-list',
+            meta: { requiresAuth: true }
         }, {
             path: '/category/create',
             component: CreateCategory,
             name: 'create-category',
+            meta: { requiresAuth: true }
         }, {
             path: '/category/edit/:slug',
             component: EditCategory,
             name: 'edit-category',
+            meta: { requiresAuth: true }
         }, {
             path: '/product',
             component: ProductList,
             name: 'product-list',
+            meta: { requiresAuth: true }
         }, {
             path: '/product/create',
             component: CreateProduct,
             name: 'create-product',
+            meta: { requiresAuth: true }
         }, {
             path: '/product/edit/:slug',
             component: EditProduct,
             name: 'edit-product',
-        }, {
-            path: '/auth/login',
-            component: Login,
-            name: 'login',
-            meta:{ requiresVisitor: true }
-        }, {
-            path: '/auth/signup',
-            component: Signup,
-            name: 'signup',
-            meta:{ requiresVisitor: true }
+            meta: { requiresAuth: true }
         }, {
             path: '/dashboard',
             component: Dashboard,
@@ -73,7 +69,17 @@ const routes = new VueRouter({
             component: Profile,
             name: 'profile',
             meta: { requiresAuth: true }
-        }
+        } ,{
+            path: '/auth/login',
+            component: Login,
+            name: 'login',
+            meta:{ requiresVisitor: true }
+        }, {
+            path: '/auth/signup',
+            component: Signup,
+            name: 'signup',
+            meta:{ requiresVisitor: true }
+        },
     ]
 });
 

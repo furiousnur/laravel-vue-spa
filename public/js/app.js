@@ -1890,6 +1890,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: {
     auth: function auth() {
@@ -1982,10 +1984,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this.loginForm.post('/login');
 
               case 4:
-                _context.next = 6;
+                console.log('success');
+                _context.next = 7;
                 return _this.getUserData();
 
-              case 6:
+              case 7:
                 _this.$toast.success({
                   title: 'Success',
                   message: 'Login successfully.'
@@ -1995,7 +1998,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   name: 'dashboard'
                 });
 
-              case 8:
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -3297,40 +3300,44 @@ var routes = new vue_router__WEBPACK_IMPORTED_MODULE_1__.default({
   }, {
     path: '/category',
     component: _pages_category_index__WEBPACK_IMPORTED_MODULE_3__.default,
-    name: 'category-list'
+    name: 'category-list',
+    meta: {
+      requiresAuth: true
+    }
   }, {
     path: '/category/create',
     component: _pages_category_create__WEBPACK_IMPORTED_MODULE_4__.default,
-    name: 'create-category'
+    name: 'create-category',
+    meta: {
+      requiresAuth: true
+    }
   }, {
     path: '/category/edit/:slug',
     component: _pages_category_edit__WEBPACK_IMPORTED_MODULE_5__.default,
-    name: 'edit-category'
+    name: 'edit-category',
+    meta: {
+      requiresAuth: true
+    }
   }, {
     path: '/product',
     component: _pages_product_index__WEBPACK_IMPORTED_MODULE_6__.default,
-    name: 'product-list'
+    name: 'product-list',
+    meta: {
+      requiresAuth: true
+    }
   }, {
     path: '/product/create',
     component: _pages_product_create__WEBPACK_IMPORTED_MODULE_7__.default,
-    name: 'create-product'
+    name: 'create-product',
+    meta: {
+      requiresAuth: true
+    }
   }, {
     path: '/product/edit/:slug',
     component: _pages_product_edit__WEBPACK_IMPORTED_MODULE_8__.default,
-    name: 'edit-product'
-  }, {
-    path: '/auth/login',
-    component: _pages_auth_login__WEBPACK_IMPORTED_MODULE_9__.default,
-    name: 'login',
+    name: 'edit-product',
     meta: {
-      requiresVisitor: true
-    }
-  }, {
-    path: '/auth/signup',
-    component: _pages_auth_register__WEBPACK_IMPORTED_MODULE_10__.default,
-    name: 'signup',
-    meta: {
-      requiresVisitor: true
+      requiresAuth: true
     }
   }, {
     path: '/dashboard',
@@ -3345,6 +3352,20 @@ var routes = new vue_router__WEBPACK_IMPORTED_MODULE_1__.default({
     name: 'profile',
     meta: {
       requiresAuth: true
+    }
+  }, {
+    path: '/auth/login',
+    component: _pages_auth_login__WEBPACK_IMPORTED_MODULE_9__.default,
+    name: 'login',
+    meta: {
+      requiresVisitor: true
+    }
+  }, {
+    path: '/auth/signup',
+    component: _pages_auth_register__WEBPACK_IMPORTED_MODULE_10__.default,
+    name: 'signup',
+    meta: {
+      requiresVisitor: true
     }
   }]
 });
@@ -40938,112 +40959,116 @@ var render = function() {
                 attrs: { id: "navbarSupportedContent" }
               },
               [
-                _c("ul", { staticClass: "navbar-nav ml-auto mb-2 mb-lg-0" }, [
-                  _c(
-                    "li",
-                    { staticClass: "nav-item" },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "nav-link active",
-                          attrs: {
-                            "aria-current": "page",
-                            to: { name: "home" }
-                          }
-                        },
-                        [_vm._v("Home")]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "li",
-                    { staticClass: "nav-item" },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "nav-link",
-                          attrs: { to: { name: "category-list" } }
-                        },
-                        [_vm._v("Product Category")]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "li",
-                    { staticClass: "nav-item" },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "nav-link",
-                          attrs: { to: { name: "product-list" } }
-                        },
-                        [_vm._v("Product List")]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _vm.auth
-                    ? _c(
-                        "li",
-                        { staticClass: "nav-item" },
-                        [
-                          _c(
-                            "router-link",
-                            {
-                              staticClass: "nav-link",
-                              attrs: { to: { name: "dashboard" } }
-                            },
-                            [_vm._v("Dashboard")]
-                          )
-                        ],
-                        1
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  !_vm.auth
-                    ? _c(
-                        "li",
-                        { staticClass: "nav-item" },
-                        [
-                          _c(
-                            "router-link",
-                            {
-                              staticClass: "nav-link",
-                              attrs: { to: { name: "login" } }
-                            },
-                            [_vm._v("Login")]
-                          )
-                        ],
-                        1
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  !_vm.auth
-                    ? _c(
-                        "li",
-                        { staticClass: "nav-item" },
-                        [
-                          _c(
-                            "router-link",
-                            {
-                              staticClass: "nav-link",
-                              attrs: { to: { name: "signup" } }
-                            },
-                            [_vm._v("Signup")]
-                          )
-                        ],
-                        1
-                      )
-                    : _vm._e()
-                ])
+                _vm.auth
+                  ? _c(
+                      "ul",
+                      { staticClass: "navbar-nav ml-auto mb-2 mb-lg-0" },
+                      [
+                        _c(
+                          "li",
+                          { staticClass: "nav-item" },
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "nav-link active",
+                                attrs: {
+                                  "aria-current": "page",
+                                  to: { name: "home" }
+                                }
+                              },
+                              [_vm._v("Home")]
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "li",
+                          { staticClass: "nav-item" },
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "nav-link",
+                                attrs: { to: { name: "category-list" } }
+                              },
+                              [_vm._v("Product Category")]
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "li",
+                          { staticClass: "nav-item" },
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "nav-link",
+                                attrs: { to: { name: "product-list" } }
+                              },
+                              [_vm._v("Product List")]
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "li",
+                          { staticClass: "nav-item" },
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "nav-link",
+                                attrs: { to: { name: "dashboard" } }
+                              },
+                              [_vm._v("Dashboard")]
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    )
+                  : _c(
+                      "ul",
+                      { staticClass: "navbar-nav ml-auto mb-2 mb-lg-0" },
+                      [
+                        _c(
+                          "li",
+                          { staticClass: "nav-item" },
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "nav-link",
+                                attrs: { to: { name: "login" } }
+                              },
+                              [_vm._v("Login")]
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "li",
+                          { staticClass: "nav-item" },
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "nav-link",
+                                attrs: { to: { name: "signup" } }
+                              },
+                              [_vm._v("Signup")]
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    )
               ]
             )
           ],

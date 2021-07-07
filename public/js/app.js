@@ -43375,7 +43375,7 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("td", { attrs: { width: "20%" } }, [
-                          _vm._v(_vm._s(product.slug))
+                          _vm._v(_vm._s(product.category.name))
                         ]),
                         _vm._v(" "),
                         _c("td", { attrs: { width: "25%" } }, [
@@ -43446,7 +43446,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { width: "10%" } }, [_vm._v("Price")]),
         _vm._v(" "),
-        _c("th", { attrs: { width: "20%" } }, [_vm._v("Slug")]),
+        _c("th", { attrs: { width: "20%" } }, [_vm._v("Category")]),
         _vm._v(" "),
         _c("th", { attrs: { width: "25%" } }, [_vm._v("Description")]),
         _vm._v(" "),

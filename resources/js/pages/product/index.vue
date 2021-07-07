@@ -16,7 +16,7 @@
                                     <th width="5%">Image</th>
                                     <th width="20%">Title</th>
                                     <th width="10%">Price</th>
-                                    <th width="20%">Slug</th>
+                                    <th width="20%">Category</th>
                                     <th width="25%">Description</th>
                                     <th width="5%">Status</th>
                                     <th width="15%">Action</th>
@@ -30,7 +30,7 @@
                                     </td>
                                     <td width="20%">{{ product.title }}</td>
                                     <td width="10%">{{ product.price }}</td>
-                                    <td width="20%">{{ product.slug }}</td>
+                                    <td width="20%">{{ product.category.name }}</td>
                                     <td width="25%">{{ product.description }}</td>
                                     <td width="5%">{{ product.status }}</td>
                                     <td width="15%">

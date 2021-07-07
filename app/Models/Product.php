@@ -14,4 +14,8 @@ class Product extends Model
     public function scopeActive($query){
         return $query->where('status','active');
     }
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
 }

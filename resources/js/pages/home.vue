@@ -8,9 +8,12 @@
             <div class="col-md-3 mb-3 ml-2" v-for="product in products" :key="product.id">
                 <div class="card" style="width: 18rem;">
                     <img class="card-img-top" :src="product.image" alt="Card image cap"  style="height: 150px; object-fit: cover; overflow: hidden">
-                    <div class="card-body" style="height: 170px;">
+                    <div class="card-body" style="height: 100px;">
+                        <div class="d-flex justify-content-between">
+                            <h5><span class="badge badge-primary">${{product.price}}</span></h5>
+                            <h5><span class="badge badge-success">{{product.category.name}}</span></h5>
+                        </div>
                         <h5 class="card-title">{{product.title}}</h5>
-                        <p class="card-text">{{product.description}}</p>
                     </div>
                     <div class="card-footer">
                         <router-link :to="{name:'show-product',params:{slug:product.slug}}" class="btn btn-primary btn-sm">Details </router-link>

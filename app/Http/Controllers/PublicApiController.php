@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class PublicApiController extends Controller
 {
     public function products(){
-        $products = Product::latest()->paginate(15);
+        $products = Product::with('category')->latest()->paginate(15);
         return response()->json($products, 200);
     }
 }

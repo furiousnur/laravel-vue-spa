@@ -2696,6 +2696,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -42693,15 +42696,33 @@ var render = function() {
                       "div",
                       {
                         staticClass: "card-body",
-                        staticStyle: { height: "170px" }
+                        staticStyle: { height: "100px" }
                       },
                       [
+                        _c(
+                          "div",
+                          { staticClass: "d-flex justify-content-between" },
+                          [
+                            _c("h5", [
+                              _c(
+                                "span",
+                                { staticClass: "badge badge-primary" },
+                                [_vm._v("$" + _vm._s(product.price))]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("h5", [
+                              _c(
+                                "span",
+                                { staticClass: "badge badge-success" },
+                                [_vm._v(_vm._s(product.category.name))]
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
                         _c("h5", { staticClass: "card-title" }, [
                           _vm._v(_vm._s(product.title))
-                        ]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "card-text" }, [
-                          _vm._v(_vm._s(product.description))
                         ])
                       ]
                     ),
@@ -43715,18 +43736,24 @@ var render = function() {
                       "d-flex justify-content-between align-items-center"
                   },
                   [
-                    _c("p", [
+                    _c("h4", [
                       _c("span", { staticClass: "font-weight-bold" }, [
                         _vm._v("Price:")
                       ]),
-                      _vm._v(" " + _vm._s(_vm.price))
+                      _vm._v(" "),
+                      _c("span", { staticClass: "badge badge-primary" }, [
+                        _vm._v(_vm._s(_vm.price))
+                      ])
                     ]),
                     _vm._v(" "),
-                    _c("p", [
+                    _c("h5", [
                       _c("span", { staticClass: "font-weight-bold" }, [
                         _vm._v("Category:")
                       ]),
-                      _vm._v(" " + _vm._s(_vm.category))
+                      _vm._v(" "),
+                      _c("span", { staticClass: "badge badge-success" }, [
+                        _vm._v(_vm._s(_vm.category))
+                      ])
                     ])
                   ]
                 ),

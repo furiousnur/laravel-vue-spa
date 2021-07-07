@@ -17,8 +17,8 @@
                                     <h2 class="font-weight-bold mt-5">{{title}}</h2>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <p><span class="font-weight-bold">Price:</span> {{price}}</p>
-                                    <p><span class="font-weight-bold">Category:</span> {{category}}</p>
+                                    <h4><span class="font-weight-bold">Price:</span> <span class="badge badge-primary">{{price}}</span></h4>
+                                    <h5><span class="font-weight-bold">Category:</span> <span class="badge badge-success">{{category}}</span></h5>
                                 </div>
                                 <p>{{description}}</p>
                             </div>

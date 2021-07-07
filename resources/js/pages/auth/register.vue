@@ -34,7 +34,7 @@
                                     <div v-if="registerForm.errors.has('password_confirmation')" v-html="registerForm.errors.get('password_confirmation')"/>
                                 </div>
                                 <div class="form-group">
-                                    <button class="btn btn-success px-4" type="submit">Crate an account</button>
+                                    <button class="btn btn-success px-4" type="submit" :disabled="registerForm.busy">Crate an account</button>
                                 </div>
                             </form>
                         </div>

@@ -51,7 +51,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <button class="btn btn-success px-4" type="submit">Update Profile</button>
+                                    <button class="btn btn-success px-4" type="submit" :disabled="profileForm.busy">Update Profile</button>
                                 </div>
                             </form>
                         </div>

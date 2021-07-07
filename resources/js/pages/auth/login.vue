@@ -22,7 +22,7 @@
                                     <div v-if="loginForm.errors.has('password')" v-html="loginForm.errors.get('password')"/>
                                 </div>
                                 <div class="form-group">
-                                    <button class="btn btn-success px-4" type="submit">Login</button>
+                                    <button class="btn btn-success px-4" type="submit" :disabled="loginForm.busy">Login</button>
                                 </div>
                             </form>
                         </div>

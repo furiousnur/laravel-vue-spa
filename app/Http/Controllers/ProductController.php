@@ -70,9 +70,15 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($slug)
     {
-        //
+        $product = Product::with('category')->where('slug',$slug)->first();
+
+        if ($product){
+            return response()->json($product,200);
+        }else{
+            return response()->json('failed',404);
+        }
     }
 
     /**

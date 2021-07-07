@@ -12,6 +12,7 @@ import EditCategory from '../pages/category/edit'
 import ProductList from '../pages/product/index'
 import CreateProduct from '../pages/product/create'
 import EditProduct from '../pages/product/edit'
+import ShowProduct from '../pages/product/show'
 
 //Authentication Route List
 import Login from '../pages/auth/login'
@@ -58,6 +59,11 @@ const routes = new VueRouter({
             path: '/product/edit/:slug',
             component: EditProduct,
             name: 'edit-product',
+            meta: { requiresAuth: true }
+        }, {
+            path: '/product/show/:slug',
+            component: ShowProduct,
+            name: 'show-product',
             meta: { requiresAuth: true }
         }, {
             path: '/dashboard',

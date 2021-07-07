@@ -13,7 +13,7 @@
                         <p class="card-text">{{product.description}}</p>
                     </div>
                     <div class="card-footer">
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <router-link :to="{name:'show-product',params:{slug:product.slug}}" class="btn btn-primary btn-sm">Details </router-link>
                     </div>
                 </div>
             </div>
